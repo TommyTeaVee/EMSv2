@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TommyTeaVee/EMSv2.git"
+  },
+  "keywords": [
+    "Employee",
+    "Management",
+    "System",
+    "Full",
+    "Stack"
+  ],
+  "author": "TommyTV",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TommyTeaVee/EMSv2/issues"
+  },
+  "homepage": "https://github.com/TommyTeaVee/EMSv2#readme"
+}
