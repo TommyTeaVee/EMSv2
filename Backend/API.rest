@@ -1,0 +1,68 @@
+### test the server
+GET http://localhost:35050
+
+
+###################ADMIN TASKS########################
+
+### authenticate ADMIN (login|)
+POST http://localhost:35050/auth/adminlogin
+content-type: application/json
+
+{
+    "email": "admin@shaper.co.za",
+    "password": "@dmin@dmin1023"
+}
+
+####Get a list of all departments
+GET http://localhost:35050/auth/api/department
+
+
+#######get a list all employees
+GET http://localhost:35050/auth/api/employees
+
+########get total number of all employees
+GET http://localhost:35050/auth/api/employee_count
+
+###Get total number of  admins
+GET http://localhost:35050/auth//api/admin_records
+
+
+#### Add a new department####
+POST http://localhost:35050/auth/api/add_department HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Sales"
+}
+
+#########SAMPLE DATA #####
+POST http://localhost:35050/auth/api/add_employee 
+content-type: application/json
+
+
+{
+      "employee_name": "Alice",
+      "employee_surname": "Wonder",
+      "email": "alice@shaper.co.za",
+      "password": "janePassword!",
+      "address": "Work drive cres",
+      "job_title": "Customer Service",
+      "salary": "10000.00",
+      "image":"filenames.jpg",
+      "department_id": 3
+}
+
+
+### authenticate Employee (login)
+POST http://localhost:35050/user/api/employee_login
+content-type: application/json
+
+{
+    "email": "johndoe@shaper.co.za",
+    "password": "johnPassword!"
+}
+
+
+
+###GET Employee Details################
+ GET  http://localhost:35050/auth/api/employee/2

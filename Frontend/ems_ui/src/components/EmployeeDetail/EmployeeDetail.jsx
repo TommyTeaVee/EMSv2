@@ -5,10 +5,10 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 const EmployeeDetail = () => {
     const [employee, setEmployee] = useState([])
-    const {id} = useParams()
+    const {employee_id} = useParams()
     const navigate = useNavigate()
     useEffect(() => {
-        axios.get('http://localhost:35050/api/employee/detail/'+id)
+        axios.get('http://localhost:35050/api/employee/detail/'+employee_id)
         .then(result => {
             setEmployee(result.data[0])
         })

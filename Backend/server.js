@@ -1,3 +1,5 @@
+
+import 'dotenv/config'
 import express from 'express';
 import cors from 'cors';
 import Jwt from "jsonwebtoken";
@@ -27,7 +29,6 @@ app.use(cors({
 app.use(express.json())
 app.use(cookieParser())
 app.use('/auth', adminRouter)
-app.use('/employee', EmployeeRouter)
 app.use(express.static('Public'))
 app.use('/auth', adminRouter)
 app.use('/user', EmployeeRouter)
@@ -38,7 +39,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const verifyUser = (req, res, next) => {
     const token = req.cookies.token;
     if(token) {
-        Jwt.verify(token, "jwt_secret_key", (err ,decoded) => {
+        Jwt.verify(token, process.env.JWT_SECRET_KEY || "R3ACTJWT", (err ,decoded) => {
             if(err) return res.json({Status: false, Error: "Wrong Token"})
             req.id = decoded.id;
             req.role = decoded.role;

@@ -1,6 +1,7 @@
-import axios from "axios";
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const AddEmployee = () => {
   const [employee, setEmployee] = useState({
@@ -20,7 +21,7 @@ const AddEmployee = () => {
       .get("http://localhost:35050/auth/api/department")
       .then((result) => {
         if (result.data.Status) {
-          setDepartment(result.data.Result);
+          setDepartment(result.data.Results);
         } else {
           alert(result.data.Error);
         }
@@ -65,7 +66,7 @@ const AddEmployee = () => {
               id="inputName"
               placeholder="Enter Name"
               onChange={(e) =>
-                setEmployee({ ...employee, name: e.target.value })
+                setEmployee({ ...employee, employee_name: e.target.value })
               }
             />
           </div>

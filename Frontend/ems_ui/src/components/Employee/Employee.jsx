@@ -12,7 +12,7 @@ const Employee = () => {
       .get("http://localhost:35050/auth/api/employees")
       .then((result) => {
         if (result.data.Status) {
-          setEmployee(result.data.Result);
+          setEmployee(result.data.Results);
         } else {
           alert(result.data.Error);
         }

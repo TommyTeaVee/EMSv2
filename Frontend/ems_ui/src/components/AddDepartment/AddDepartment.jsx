@@ -3,12 +3,15 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const AddDepartment = () => {
-    const [department, setDepartment] = useState()
+    const [department, setDepartment] = useState({
+        department :'SeverRoom',
+})
     const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault()
         axios.post('http://localhost:35050/auth/api/add_department', {department})
+        console.log(department)
         .then(result => {
             if(result.data.Status) {
                 navigate('/dashboard/department')

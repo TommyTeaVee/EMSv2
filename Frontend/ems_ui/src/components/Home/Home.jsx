@@ -44,7 +44,7 @@ const Home = () => {
     axios.get('http://localhost:35050/auth/api/salary_count')
     .then(result => {
       if(result.data.Status) {
-        setSalaryTotal(result.data.Result[0].salaryOFEmp)
+        setSalaryTotal(result.data.Result[0].salaryofemp)
       } else {
         alert(result.data.Error)
       }

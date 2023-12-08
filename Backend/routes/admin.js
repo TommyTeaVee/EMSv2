@@ -20,7 +20,7 @@ router.post('/adminlogin', (req, res)=> {
       const email = result.rows[0].email;
       const token = jwt.sign(
         { role: "admin", email: email, id: result.rows[0].id },
-        "jwt_secret_key",
+        "R3ACTJWT",
         { expiresIn: "1d" }
       );
       res.cookie('token', token)
@@ -53,6 +53,7 @@ router.post('/api/add_department', (req, res) => {
     const sql = 'INSERT INTO department (name) VALUES ($1)';
     conn.query(sql, [req.body.name], (err, result) => {
         if (err){
+            console.log(req.body.name)
             return res.json({Status: false,  Results: 'Query error' + err.message})
         } else{
             return res.json({Status: true,  Results: result.rows})
@@ -62,29 +63,41 @@ router.post('/api/add_department', (req, res) => {
 
 
 //Image uploader using Multer
-const storage = multer.diskStorage({
+const multerStorage = multer.diskStorage({
     destination: (req, file, cb) =>{
         cb(null, 'public/images/')
     },
-    filename: (req, file, cb) =>{
-        cb(null, file.fieldname + '.' + Date.now() + path.extname(file.originalname))
-        console.log('Uploading file')
-        
-    }
-
-})
+    filename: (req, file, cb) => {
+   
+        cb(null, `image-${Date.now()}` + path.extname(file.originalname))
+           //path.extname get the uploaded file extension
+       }
+     });
+     const multerFilter = (req, file, cb) => {
+   
+        if (!file.originalname.match(/\.(png|jpg|jpeg|gif|web)$/)) { 
+             // upload only png and jpg format
+           return cb(new Error('You can only upload image types of files'))
+         }
+       cb(null, true)
+    
+};
 
 //initialise multer to perform uploading
-const upload = multer({ storage: storage})
+const upload = multer({
+    storage: multerStorage,
+    fileFilter: multerFilter
+  });
+  
 //end of image upload
 
-router.post('/api/add_employee', upload.single('image'), (req, res, next) => {
+/* router.post('/api/add_employee', upload.single('image'), (req, res, next) => {
 
   const sql = `INSERT INTO employees
   (employee_name, email, password, address, job_title, salary, image, department_id)
-   VALUES($1, $2, $3, $4, $5, $6, $7, $8)`;
+   VALUES($1, $2, $3, $4, $5, $6, ${req.file.filename}, $8) RETURNING *`;
    //Encrypt the user password
-   const password = "My password"
+
    bcrypt.hash(req.body.password, 10, (err, hash) => {
     console.log(hash);
      if (err){
@@ -97,7 +110,7 @@ router.post('/api/add_employee', upload.single('image'), (req, res, next) => {
         req.body.address,
         req.body.job_title,
         req.body.salary, 
-        req.file.filename,
+
         req.body.department_id
     ]
     conn.query(sql, [values], (err, result) => {
@@ -115,7 +128,49 @@ router.post('/api/add_employee', upload.single('image'), (req, res, next) => {
 
 
 
-})
+}) */
+router.post('/api/add_employee', upload.single('image'), async (req, res, next) => {
+    try {
+      // Check if an image was provided
+      if (!req.file) {
+        return res.status(400).json({ Status: false, Error: 'No image uploaded.' });
+      }
+  
+      // Encrypt the user password
+      bcrypt.hash(req.body.password, 10, async (err, hash) => {
+        if (err) {
+          return res.status(500).json({ Status: false, Error: 'Password hashing failed.' });
+        }
+  
+        const sql = `
+          INSERT INTO employees
+          (employee_name, email, password, address, job_title, salary, image, department_id)
+          VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *
+        `;
+  
+        const values = [
+          req.body.employee_name,
+          req.body.email,
+          hash,
+          req.body.address,
+          req.body.job_title,
+          req.body.salary,
+          req.file.buffer, // Use req.file.buffer to get the image data
+          req.body.department_id,
+        ];
+  
+        // Use async/await with the pool.query for better error handling
+        const result = await conn.query(sql, values);
+  
+        res.json({ Status: true, Result: result.rows });
+      });
+    } catch (error) {
+      console.error('Error adding employee:', error);
+      res.status(500).json({ Status: false, Error: 'Internal Server Error' });
+    }
+  });
+  
+
 
 //Get all Employees 
 router.get('/api/employees', (req, res) => {
@@ -141,7 +196,7 @@ router.get('/api/employee/:id', (req, res) => {
         if(err) {return res.json({Status: false, Error: "Query Error " + err.message})
     }
        else { 
-        return res.json({Status: true, Result: result.rows})
+        return res.json({Status: true, Result: result.rows[0]})
     }
     })
 })
