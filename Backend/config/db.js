@@ -3,10 +3,10 @@ import pg from 'pg';
 const { Pool } = pg;
 
  const conn = new Pool({
-  user: 'me',
+  user: 'admin',
   host: 'localhost',
   database: 'employeems',
-  password: 'password',
+  password: 'admin12345',
   port: 5432,
 })
 
