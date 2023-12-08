@@ -1,12 +1,13 @@
-//MYSQL database
-import mysql from 'mysql';
+//Replaced MYSQL Configuration with Postgres
+import pg from 'pg';
+const { Pool } = pg;
 
-//Database connection string
-const conn= mysql.createConnection({
-    host: 'localhost',
-    user:'sueperadmin',
-    password: '@dmin@dmin1023',
-    database: "employeems"
+ const conn = new Pool({
+  user: 'me',
+  host: 'localhost',
+  database: 'employeems',
+  password: 'password',
+  port: 5432,
 })
 
 //Database connection verification
