@@ -6,7 +6,7 @@ import conn from '../config/db.js'
 import bcrypt from 'bcrypt';
 
 
-const router = express.router();
+const router = express.Router();
 
 
 router.post('/adminlogin', (req, res)=> { 
@@ -25,7 +25,7 @@ router.post('/adminlogin', (req, res)=> {
     return res.json({loginStatus: true})
 }
         else{
-          return res.json({loginStatus: false, 'Error: Wrong email address or password'});  
+          return res.json({loginStatus: false, Error: 'Error: Wrong email address or password'});  
         }
 
 

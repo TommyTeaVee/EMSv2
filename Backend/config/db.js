@@ -18,4 +18,4 @@ conn.connect(function (err){
         console.log(`Database connected successfully`)
     }
 })
-
+export default conn;
