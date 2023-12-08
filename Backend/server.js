@@ -1,10 +1,9 @@
 import express from 'express';
 import cors from 'cors';
+import { adminRouter } from "./routes/admin.js";
+import { EmployeeRouter } from "./routes/employees.js";
 import Jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
-import { adminRouter } from './routes/admin.js';
-import { EmployeeRouter } from './routes/employees.js';
-
 
 const PORT = 35050;
 
@@ -20,13 +19,17 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', "DELETE"],
     credentials: true
 }))
+app.get('/', (req, res) =>{
+console.log(`Server online`)
+})
+
+app.use('/auth', adminRouter)
+app.use('/employee', EmployeeRouter)
 app.use(express.json())
 app.use(cookieParser())
 app.use('/auth', adminRouter)
 app.use('/employee', EmployeeRouter)
 app.use(express.static('Public'))
-app.use('/auth', adminRouter)
-app.use('/employee', EmployeeRouter)
 const verifyUser = (req, res, next) => {
     const token = req.cookies.token;
     if(token) {
