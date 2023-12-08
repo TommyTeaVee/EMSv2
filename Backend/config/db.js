@@ -5,7 +5,8 @@ import mysql from 'mysql';
 const conn= mysql.createConnection({
     host: 'localhost',
     user:'sueperadmin',
-    password: '@dmin@dmin1023'
+    password: '@dmin@dmin1023',
+    database: "employeems"
 })
 
 //Database connection verification
