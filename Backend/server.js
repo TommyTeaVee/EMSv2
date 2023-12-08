@@ -4,6 +4,9 @@ import Jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import { adminRouter } from './routes/admin.js';
 import { EmployeeRouter } from './routes/employees.js';
+import bodyParser from 'body-parser';
+import seeder from './migrations/seedings.js';
+
 
 
 const PORT = 35050;
@@ -13,6 +16,7 @@ const app = express()
 
 app.get('/', (req, res) =>{
 console.log(`Server online`)
+res.json({Status: true, Result:"Server online "})
 })
 
 app.use(cors({
@@ -27,6 +31,10 @@ app.use('/employee', EmployeeRouter)
 app.use(express.static('Public'))
 app.use('/auth', adminRouter)
 app.use('/employee', EmployeeRouter)
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
 const verifyUser = (req, res, next) => {
     const token = req.cookies.token;
     if(token) {
@@ -44,6 +52,7 @@ app.get('/verify',verifyUser, (req, res)=> {
     return res.json({Status: true, role: req.role, id: req.id})
 } )
 
+seeder();
 app.listen(PORT,()=>{
     console.log(`Server running in Port : ${PORT}`);
 })
