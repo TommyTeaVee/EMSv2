@@ -8,7 +8,7 @@ import bcrypt from 'bcrypt';
 
 const router = express.Router();
 
-
+//Admin login
 router.post('/adminlogin', (req, res)=> { 
   //console.log(req.body)
   const sql =  'SELECT * FROM admin WHERE email = $1 AND password = $2';
