@@ -33,7 +33,7 @@ const EmployeeDetail = () => {
             <div className='d-flex align-items-center flex-column mt-5'>
                 <h3>Name: {employee.employee_name}</h3>
                 <h3>Email: {employee.email}</h3>
-                <h3>Salary: ${employee.salary}</h3>
+                <h3>Salary: R{employee.salary}</h3>
             </div>
             <div>
                 <button className='btn btn-primary me-2'>Edit</button>

@@ -9,7 +9,7 @@ const Employee = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:35050/auth/api/employee")
+      .get("http://localhost:35050/auth/api/employees")
       .then((result) => {
         if (result.data.Status) {
           setEmployee(result.data.Result);

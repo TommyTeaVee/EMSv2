@@ -213,7 +213,7 @@ router.get('/api/salary_count', (req, res) => {
 
 router.get('/api/admin_records', (req, res) => {
     const sql = "SELECT * FROM admin"
-    con.query(sql, (err, result) => {
+    conn.query(sql, (err, result) => {
         if(err) {
             return res.json({Status: false, Error: "Query Error"+err})
         }

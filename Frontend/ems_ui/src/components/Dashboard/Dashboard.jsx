@@ -7,7 +7,7 @@ const Dashboard = () => {
   const anvigate = useNavigate()
   axios.defaults.withCredentials = true
   const handleLogout = () => {
-    axios.get('http://localhost:35050/auth/logout')
+    axios.get('http://localhost:35050/auth/api/logout')
     .then(result => {
       if(result.data.Status) { 
         localStorage.removeItem("valid")
