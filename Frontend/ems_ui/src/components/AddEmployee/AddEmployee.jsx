@@ -12,12 +12,12 @@ const AddEmployee = () => {
     department_id: "",
     image: "",
   });
-  const [category, setDepartment] = useState([]);
+  const [department, setDepartment] = useState([]);
   const navigate = useNavigate()
 
   useEffect(() => {
     axios
-      .get("http://localhost:35050/auth/category")
+      .get("http://localhost:35050/auth/api/department")
       .then((result) => {
         if (result.data.Status) {
           setDepartment(result.data.Result);
@@ -39,7 +39,7 @@ const AddEmployee = () => {
     formData.append('image', employee.image);
     formData.append('category_id', employee.category_id);
 
-    axios.post('http://localhost:35050/auth/add_employee', formData)
+    axios.post('http://localhost:35050/auth/api/add_employee', formData)
     .then(result => {
         if(result.data.Status) {
             navigate('/dashboard/employee')
@@ -132,7 +132,7 @@ const AddEmployee = () => {
             </label>
             <select name="department" id="department" className="form-select"
                 onChange={(e) => setEmployee({...employee, department_id: e.target.value})}>
-              {category.map((c) => {
+              {department.map((c) => {
                 return <option value={c.id}>{c.name}</option>;
               })}
             </select>

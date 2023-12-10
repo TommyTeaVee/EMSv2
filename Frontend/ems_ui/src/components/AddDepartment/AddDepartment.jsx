@@ -8,7 +8,7 @@ const AddDepartment = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:305050/auth/add_department', {category})
+        axios.post('http://localhost:35050/auth/api/add_department', {department})
         .then(result => {
             if(result.data.Status) {
                 navigate('/dashboard/department')

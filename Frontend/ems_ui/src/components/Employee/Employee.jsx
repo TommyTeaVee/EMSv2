@@ -9,7 +9,7 @@ const Employee = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:35050/auth/employee")
+      .get("http://localhost:35050/auth/api/employee")
       .then((result) => {
         if (result.data.Status) {
           setEmployee(result.data.Result);
@@ -20,7 +20,7 @@ const Employee = () => {
       .catch((err) => console.log(err));
   }, []);
   const handleDelete = (id) => {
-    axios.delete('http://localhost:305050/auth/delete_employee/'+id)
+    axios.delete('http://localhost:305050/auth/api/delete_employee/'+id)
     .then(result => {
         if(result.data.Status) {
             window.location.reload()

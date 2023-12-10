@@ -7,7 +7,7 @@ const Start = () => {
     const navigate = useNavigate()
   axios.defaults.withCredentials = true;
   useEffect(() => {
-    axios.get('http://localhost:305050/verify')
+    axios.get('http://localhost:35050/verify')
     .then(result => {
       if(result.data.Status) {
         if(result.data.role === "admin") {

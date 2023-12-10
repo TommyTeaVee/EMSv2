@@ -7,7 +7,7 @@ const Department = () => {
     const [department, setDepartment] = useState([])
 
     useEffect(()=> {
-        axios.get('http://localhost:35050/auth/department')
+        axios.get('http://localhost:35050/auth/api/department')
         .then(result => {
             if(result.data.Status) {
                 setDepartment(result.data.Result);

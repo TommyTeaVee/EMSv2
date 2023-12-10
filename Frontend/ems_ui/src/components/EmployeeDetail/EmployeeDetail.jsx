@@ -29,7 +29,7 @@ const EmployeeDetail = () => {
             <h4>Emoployee Management System</h4>
         </div>
         <div className='d-flex justify-content-center flex-column align-items-center mt-3'>
-            <img src={`http://localhost:3000/Images/`+employee.image} className='emp_det_image'/>
+            <img src={`http://localhost:3000/images/`+employee.image} className='emp_det_image'/>
             <div className='d-flex align-items-center flex-column mt-5'>
                 <h3>Name: {employee.employee_name}</h3>
                 <h3>Email: {employee.email}</h3>
