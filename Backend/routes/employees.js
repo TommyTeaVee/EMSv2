@@ -5,8 +5,8 @@ import bcrypt from 'bcrypt'
 
 const router = express.Router()
 
-router.post("/employee_login", (req, res) => {
-    const sql = "SELECT * from employee Where email = ?";
+router.post("/api/employee_login", (req, res) => {
+    const sql = "SELECT * from employees Where email = $1";
     con.query(sql, [req.body.email], (err, result) => {
       if (err) return res.json({ loginStatus: false, Error: "Query error" });
       if (result.length > 0) {
@@ -32,10 +32,10 @@ router.post("/employee_login", (req, res) => {
 
   router.get('/detail/:id', (req, res) => {
     const id = req.params.id;
-    const sql = "SELECT * FROM employee where id = ?"
+    const sql = "SELECT * FROM employees where employee_id = $1"
     con.query(sql, [id], (err, result) => {
         if(err) return res.json({Status: false});
-        return res.json(result)
+        return res.json(result.rows[0])
     })
   })
 
