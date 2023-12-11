@@ -30,7 +30,7 @@ app.use('/auth', adminRouter)
 app.use('/employee', EmployeeRouter)
 app.use(express.static('Public'))
 app.use('/auth', adminRouter)
-app.use('/employee', EmployeeRouter)
+app.use('/user', EmployeeRouter)
 app.use(bodyParser.urlencoded({ extended: true }));
 
 

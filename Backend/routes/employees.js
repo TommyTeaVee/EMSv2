@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.post("/api/employee_login", (req, res) => {
     const sql = "SELECT * from employees Where email = $1";
-    con.query(sql, [req.body.email], (err, result) => {
+    conn.query(sql, [req.body.email], (err, result) => {
       if (err) return res.json({ loginStatus: false, Error: "Query error" });
       if (result.length > 0) {
         bcrypt.compare(req.body.password, result[0].password, (err, response) => {
@@ -33,7 +33,7 @@ router.post("/api/employee_login", (req, res) => {
   router.get('/detail/:id', (req, res) => {
     const id = req.params.id;
     const sql = "SELECT * FROM employees where employee_id = $1"
-    con.query(sql, [id], (err, result) => {
+    conn.query(sql, [id], (err, result) => {
         if(err) return res.json({Status: false});
         return res.json(result.rows[0])
     })
