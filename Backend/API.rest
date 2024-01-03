@@ -35,34 +35,18 @@ content-type: application/json
     "name": "Sales"
 }
 
-#########SAMPLE DATA #####
-POST http://localhost:35050/auth/api/add_employee 
-content-type: application/json
-
-
-{
-      "employee_name": "Alice",
-      "employee_surname": "Wonder",
-      "email": "alice@shaper.co.za",
-      "password": "janePassword!",
-      "address": "Work drive cres",
-      "job_title": "Customer Service",
-      "salary": "10000.00",
-      "image":"filenames.jpg",
-      "department_id": 3
-}
-
 
 ### authenticate Employee (login)
 POST http://localhost:35050/user/api/employee_login
 content-type: application/json
 
 {
-    "email": "johndoe@shaper.co.za",
-    "password": "johnPassword!"
+    "email": "lisa@shaper.co.za",
+    "password": "password1"
 }
 
 
 
 ###GET Employee Details################
- GET  http://localhost:35050/auth/api/employee/2
+
+ GET  http://localhost:35050/user/api/employees/me

@@ -62,32 +62,30 @@ router.post('/api/add_department', (req, res) => {
 })
 
 
-//Image uploader using Multer
+// Image uploader using Multer
 const multerStorage = multer.diskStorage({
-    destination: (req, file, cb) =>{
-        cb(null, 'public/images/')
-    },
-    filename: (req, file, cb) => {
-   
-        cb(null, `image-${Date.now()}` + path.extname(file.originalname))
-           //path.extname get the uploaded file extension
-       }
-     });
-     const multerFilter = (req, file, cb) => {
-   
-        if (!file.originalname.match(/\.(png|jpg|jpeg|gif|web)$/)) { 
-             // upload only png and jpg format
-           return cb(new Error('You can only upload image types of files'))
-         }
-       cb(null, true)
-    
+  destination: (req, file, cb) => {
+    cb(null, 'public/images/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `image-${Date.now()}` + path.extname(file.originalname));
+    // path.extname gets the uploaded file extension
+  },
+});
+
+const multerFilter = (req, file, cb) => {
+  if (!file.originalname.match(/\.(png|jpg|jpeg|gif|web)$/)) {
+    // upload only png and jpg format
+    return cb(new Error('You can only upload image types of files'));
+  }
+  cb(null, true);
 };
 
-//initialise multer to perform uploading
+// Initialize multer to perform uploading
 const upload = multer({
-    storage: multerStorage,
-    fileFilter: multerFilter
-  });
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
   
 //end of image upload
 

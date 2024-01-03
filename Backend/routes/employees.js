@@ -5,7 +5,17 @@ import bcrypt from "bcrypt";
 
 const router = express.Router();
 
-router.post("/api/employee_login", async (req, res) => {  
+
+// Middleware to generate a token upon successful login
+const generateToken = (user) => {
+  return jwt.sign(
+    { user },
+    process.env.JWT_SECRET_KEY || "R3ACTJWTKEY",
+    { expiresIn: "1d" }
+  );
+}
+
+/* router.post("/api/employee_login", async (req, res) => {  
   const { email, password } = req.body;
 
   const sql = "SELECT * from employees WHERE email = $1";
@@ -52,16 +62,69 @@ router.post("/api/employee_login", async (req, res) => {
     }
   });
 });
+ */
+/* router.get("/detail/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM employees WHERE employee_id = $1";
+  conn.query(sql,[id], (err, result) => {
+      if(err) {return res.json({Status: false, Error: "Query Error " + err.message})
+  }
+     else { 
+      return res.json({Status: true, Result: result.rows[0]})
+  }
+  })
+})
+ */
 
-router.get("/detail/:id", (req, res) => {
-  const id = req.params.employee_id;
-  const sql = "SELECT * FROM employees where employee_id = $1";
-  conn.query(sql, [id], (err, result) => {
-    if (err){ 
-      return res.json({ Status: false });}
+router.post('/api/employee_login', async (req, res) => {
+  const { email, password } = req.body;
 
-   res.status(200).json(result.rows);
+  try {
+    const result = await conn.query('SELECT * from employees WHERE email = $1', [email]);
+
+    if (result.rows.length > 0) {
+      const user = result.rows[0];
+
+      // Compare the provided password with the hashed password in the database
+      const passwordMatch = await bcrypt.compare(password, user.password);
+
+      if (passwordMatch) {
+        // Generate a JWT token
+        const token = jwt.sign({ email: user.email },  process.env.JWT_SECRET_KEY || "R3ACTJWTKEY", { expiresIn: '1h' });
+        res.json({ token });
+      } else {
+        res.status(401).json({ error: 'Invalid credentials' });
+      }
+    } else {
+      res.status(401).json({ error: 'Invalid credentials' });
+    }
+  } catch (error) {
+    console.error('Error logging in', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// Middleware to verify JWT
+function verifyToken(req, res, next) {
+  console.log(req.headers);  // Log headers
+  const token = req.headers['authorization'];
+
+  if (!token) {
+    return res.status(403).send('Token not provided');
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET_KEY || "R3ACTJWTKEY", (err, user) => {
+    if (err) {
+      return res.status(401).send('Invalid token');
+    }
+    req.user = user;
+    next();
   });
+}
+
+router.get('/api/employees/me', verifyToken, (req, res) => {
+  console.log(req.headers);  // Log headers
+  res.json({ message: 'This is a protected route', user: req.user });
 });
 
 router.get("/logout", (req, res) => {
