@@ -11,7 +11,7 @@ import seeder from './migrations/seedings.js';
 
 
 
-const PORT = 35050;
+const PORT = process.env.PORT ||35050;
 
 const app = express() 
 
