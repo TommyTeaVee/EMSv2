@@ -7,6 +7,9 @@ const Employee = () => {
   const [employee, setEmployee] = useState([]);
   const navigate = useNavigate()
 
+  
+  
+  
   useEffect(() => {
     axios
       .get("http://localhost:35050/auth/api/employees")
@@ -19,16 +22,20 @@ const Employee = () => {
       })
       .catch((err) => console.log(err));
   }, []);
-  const handleDelete = (id) => {
-    axios.delete('http://localhost:305050/auth/api/delete_employee/'+id)
-    .then(result => {
-        if(result.data.Status) {
-            window.location.reload()
-        } else {
-            alert(result.data.Error)
-        }
-    })
-  } 
+
+
+
+const handleDelete = (id) => {
+  axios
+    .delete("http://localhost:35050/auth/api/delete_employee/" + id)
+    .then((result) => {
+      if (result.data.Status) {
+        setRefresh(!refresh); // toggle refresh state
+      } else {
+        alert(result.data.Error);
+      }
+    });
+};
   return (
     <div className="px-5 mt-3">
       <div className="d-flex justify-content-center">
@@ -42,6 +49,7 @@ const Employee = () => {
           <thead>
             <tr>
               <th>Name</th>
+              <th>Surname</th>
               <th>Image</th>
               <th>Email</th>
               <th>Address</th>
@@ -51,14 +59,17 @@ const Employee = () => {
           </thead>
           <tbody>
             {employee.map((e) => (
-              <tr>
-                <td>{e.name}</td>
+              <tr key={e.id}>
+                <td>{e.employee_name}</td>
+                <td>{e.employee_surname}</td>
                 <td>
-                  <img
-                    src={`http://localhost:35050/images/` + e.image}
-                    className="employee_image"
-                  />
+                <img
+  src={`http://localhost:35050/images/` + e.image}
+  className="employee_image"
+
+/>
                 </td>
+               
                 <td>{e.email}</td>
                 <td>{e.address}</td>
                 <td>{e.salary}</td>

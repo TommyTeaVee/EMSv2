@@ -142,12 +142,13 @@ router.post('/api/add_employee', upload.single('image'), async (req, res, next) 
   
         const sql = `
           INSERT INTO employees
-          (employee_name, email, password, address, job_title, salary, image, department_id)
-          VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *
+          (employee_name, employee_surname, email, password, address, job_title, salary, image, department_id)
+          VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *
         `;
   
         const values = [
           req.body.employee_name,
+          req.body.employee_surname,
           req.body.email,
           hash,
           req.body.address,
@@ -188,7 +189,7 @@ router.get('/api/employees', (req, res) => {
 //Retrieve employee by ID
 
 router.get('/api/employee/:id', (req, res) => {
-    const id = req.params.id;
+    const id = req.params.employee_id;
     const sql = "SELECT * FROM employees WHERE employee_id = $1";
     conn.query(sql,[id], (err, result) => {
         if(err) {return res.json({Status: false, Error: "Query Error " + err.message})
@@ -214,21 +215,26 @@ router.put('/api/edit_employee/:id', (req, res) => {
     ]
     conn.query(sql,[...values, id], (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error "+err})
-        return res.json({Status: true, Result: result})
+        return res.json({Status: true, Result: result.rows})
     })
 })
 
 router.delete('/api/delete_employee/:id', (req, res) => {
-    const id = req.params.id;
-    const sql = "DELETE FROM  employees WHERE  employee_id = $1"
-    conn.query(sql,[id], (err, result) => {
-        if(err) {
-            return res.json({Status: false, Error: "Query Error: "+ err.message})
+    try {
+        const id = req.params.id;
+        const sql = "DELETE FROM employees WHERE employee_id = ?";
+
+        conn.query(sql, [id], (err, result) => {
+            if (err) {
+                return res.status(500).json({ Status: false, Error: "Query Error: " + err.message });
+            } else {
+                return res.status(200).json({ Status: true, Result: result.rows });
+            }
+        });
+    } catch (err) {
+        return res.status(500).json({ Status: false, Error: "Connection Error: " + err.message });
     }
-       else { return res.json({Status: true, Result: result.rows})
-    }
-    })
-})
+});
 
 router.get('/api/admin_count', (req, res) => {
     const sql = "SELECT COUNT(id) AS admin FROM admin";

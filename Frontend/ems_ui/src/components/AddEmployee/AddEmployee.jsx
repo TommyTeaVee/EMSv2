@@ -6,6 +6,7 @@ import axios from "axios";
 const AddEmployee = () => {
   const [employee, setEmployee] = useState({
     employee_name: "",
+    employee_surname: "",
     email: "",
     password: "",
     salary: "",
@@ -38,7 +39,7 @@ const AddEmployee = () => {
     formData.append('address', employee.address);
     formData.append('salary', employee.salary);
     formData.append('image', employee.image);
-    formData.append('category_id', employee.category_id);
+    formData.append('department_id', employee.department_id);
 
     axios.post('http://localhost:35050/auth/api/add_employee', formData)
     .then(result => {
