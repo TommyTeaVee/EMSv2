@@ -11,7 +11,7 @@ const Department = () => {
         .then(result => {
             if(result.data.Status) {
                 setDepartment(result.data.Results);
-                console.log(result.data.Status);
+                console.log(result.data.Results);
             } else {
                 alert(result.data.Error)
             }
@@ -32,11 +32,11 @@ const Department = () => {
                 </thead>
                 <tbody>
                     {
-                        department.map(c => (
-                            <tr>
-                                <td>{c.name}</td>
-                            </tr>
-                        ))
+                       department.map((departmentItem, index) => (
+                        <tr key={index}>
+                          <td>{departmentItem.name}</td>
+                        </tr>
+                      ))
                     }
                 </tbody>
             </table>

@@ -6,6 +6,8 @@ import axios from "axios";
 const Dashboard = () => {
   const anvigate = useNavigate()
   axios.defaults.withCredentials = true
+ 
+ 
   const handleLogout = () => {
     axios.get('http://localhost:35050/auth/api/logout')
     .then(result => {

@@ -4,22 +4,23 @@ import { useNavigate } from 'react-router-dom'
 
 const AddDepartment = () => {
     const [department, setDepartment] = useState({
-        department :'SeverRoom',
+        name:'',
 })
     const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:35050/auth/api/add_department', {department})
-        console.log(department)
+        axios.post('http://localhost:35050/auth/api/add_department',  department)
         .then(result => {
-            if(result.data.Status) {
-                navigate('/dashboard/department')
-            } else {
-                alert(result.data.Error)
-            }
+          console.log(department)
+          if (result.data.Status) {
+            navigate('/dashboard/department')
+          } else {
+            alert(result.data.Error)
+          }
         })
         .catch(err => console.log(err))
+      
     }
   return (
     <div className='d-flex justify-content-center align-items-center h-75'>
@@ -29,7 +30,8 @@ const AddDepartment = () => {
                 <div className='mb-3'>
                     <label htmlFor="department"><strong>Department:</strong></label>
                     <input type="text" name='department' placeholder='Enter Department'
-                     onChange={(e) => setDepartment(e.target.value)} className='form-control rounded-0'/>
+                    onChange={(e) => setDepartment({ ...department, name: e.target.value })}
+                    className='form-control rounded-0'/>
                 </div>
                 <button className='btn btn-success w-100 rounded-0 mb-2'>Add Department</button>
             </form>

@@ -1,4 +1,4 @@
-### test the server
+### test the server is it's online ##########
 GET http://localhost:35050
 
 
@@ -12,23 +12,20 @@ content-type: application/json
     "email": "admin@shaper.co.za",
     "password": "@dmin@dmin1023"
 }
+###List all  admins################################
+GET http://localhost:35050/auth/api/admin_records
 
-####Get a list of all departments
+####Get a list of all departments #################
 GET http://localhost:35050/auth/api/department
+ 
+###Get total number of  departments################
+GET http://localhost:35050/auth/api/department_count
 
 
-#######get a list all employees
-GET http://localhost:35050/auth/api/employees
-
-########get total number of all employees
-GET http://localhost:35050/auth/api/employee_count
-
-###Get total number of  admins
-GET http://localhost:35050/auth//api/admin_records
 
 
-#### Add a new department####
-POST http://localhost:35050/auth/api/add_department HTTP/1.1
+#### Add a new department##########################
+POST http://localhost:35050/auth/api/add_department 
 content-type: application/json
 
 {
@@ -36,7 +33,7 @@ content-type: application/json
 }
 
 
-### authenticate Employee (login)
+### authenticate Employee (login)####################
 POST http://localhost:35050/user/api/employee_login
 content-type: application/json
 
@@ -45,8 +42,13 @@ content-type: application/json
     "password": "password1"
 }
 
+#######get a list all employees####################
+GET http://localhost:35050/auth/api/employees
+
+########get total number of all employees###########
+GET http://localhost:35050/auth/api/employee_count
 
 
-###GET Employee Details################
+###GET Employee Details##############################
 
  GET  http://localhost:35050/user/api/employees/me

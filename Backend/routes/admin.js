@@ -252,6 +252,16 @@ router.get('/api/employee_count', (req, res) => {
     })
 })
 
+router.get('/api/department_count', (req, res) => {
+    const sql = "SELECT COUNT(id) AS name FROM department";
+    conn.query(sql, (err, result) => {
+        if(err) {
+            return res.json({Status: false, Error: "Query Error"+err})
+        }
+        else {
+            return res.json({Status: true, Result: result.rows})}
+    })
+})
 router.get('/api/salary_count', (req, res) => {
     const sql = "SELECT SUM(salary) AS salaryOFEmp from employees";
     conn.query(sql, (err, result) => {
