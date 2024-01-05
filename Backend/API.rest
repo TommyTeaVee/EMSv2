@@ -12,7 +12,7 @@ content-type: application/json
     "email": "admin@shaper.co.za",
     "password": "@dmin@dmin1023"
 }
-###List all  admins################################
+### List all  admins################################
 GET http://localhost:35050/auth/api/admin_records
 
 ####Get a list of all departments #################
