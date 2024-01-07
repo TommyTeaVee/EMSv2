@@ -18,7 +18,7 @@ The application contains two types of Users, Admin and Employee.
 
 ## Running the application
 
-This project uses Node v18^ PostgreSQL  4.5 and React.js 18 with Vite as development server.  To run the project, switch to pg-version branch and  navigate to the Backend folder first and run
+This project uses Node v18^ PostgreSQL  4.5 and React.js 18 with Vite as development server.  To run the project, switch to  ```pg-version`` branch and  navigate to the Backend folder first and run
 
 ```bash
   npm install
