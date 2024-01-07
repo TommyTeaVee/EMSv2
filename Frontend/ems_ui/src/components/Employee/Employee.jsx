@@ -53,6 +53,7 @@ const handleDelete = (id) => {
               <th>Image</th>
               <th>Email</th>
               <th>Address</th>
+              <th>Job Title</th>
               <th>Salary</th>
               <th>Action</th>
             </tr>
@@ -72,6 +73,7 @@ const handleDelete = (id) => {
                
                 <td>{e.email}</td>
                 <td>{e.address}</td>
+                <td>{e.job_title}</td>
                 <td>{e.salary}</td>
                 <td>
                   <Link

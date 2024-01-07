@@ -9,6 +9,7 @@ const AddEmployee = () => {
     employee_surname: "",
     email: "",
     password: "",
+    job_title: "",
     salary: "",
     address: "",
     department_id: "",
@@ -34,9 +35,11 @@ const AddEmployee = () => {
     e.preventDefault()
     const formData = new FormData();
     formData.append('name', employee.employee_name);
+    formData.append('surname', employee.employee_surname);
     formData.append('email', employee.email);
     formData.append('password', employee.password);
     formData.append('address', employee.address);
+    formData.append('job_title', employee.job_title);
     formData.append('salary', employee.salary);
     formData.append('image', employee.image);
     formData.append('department_id', employee.department_id);
@@ -67,10 +70,24 @@ const AddEmployee = () => {
               id="inputName"
               placeholder="Enter Name"
               onChange={(e) =>
-                setEmployee({ ...employee, employee_name: e.target.value })
+                setEmployee({ ...employee, name: e.target.value })
               }
             />
           </div>
+          <div className="col-12">
+            <label for="inputName" className="form-label">
+             Surname
+            </label>
+            <input
+              type="text"
+              className="form-control rounded-0"
+              id="inputName"
+              placeholder="Enter Surname"
+              onChange={(e) =>
+                setEmployee({ ...employee, surname: e.target.value })
+              }
+            />
+            </div>
           <div className="col-12">
             <label for="inputEmail4" className="form-label">
               Email
@@ -99,6 +116,23 @@ const AddEmployee = () => {
                 setEmployee({ ...employee, password: e.target.value })
               }
             />
+            </div>
+           
+            <div className="col-12">
+            <label for="inputName" className="form-label">
+            Job Title
+            </label>
+            <input
+              type="text"
+              className="form-control rounded-0"
+              id="jobTitle"
+              placeholder="Enter Job Title"
+              onChange={(e) =>
+                setEmployee({ ...employee, job_title: e.target.value })
+              }
+            />
+            </div>
+            <div>
             <label for="inputSalary" className="form-label">
               Salary
             </label>

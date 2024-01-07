@@ -141,22 +141,23 @@ router.post('/api/add_employee', upload.single('image'), async (req, res, next) 
         }
   
         const sql = `
-          INSERT INTO employees
-          (employee_name, employee_surname, email, password, address, job_title, salary, image, department_id)
-          VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *
-        `;
+      INSERT INTO employees
+      (employee_name, employee_surname, email, password, address, job_title, salary, image, department_id)
+      VALUES($1, $2, $3, $4, $5, $6, $7, '${req.file.buffer}, $8) RETURNING *
+    `;
   
-        const values = [
-          req.body.employee_name,
-          req.body.employee_surname,
-          req.body.email,
-          hash,
-          req.body.address,
-          req.body.job_title,
-          req.body.salary,
-          req.file.buffer, // Use req.file.buffer to get the image data
-          req.body.department_id,
-        ];
+    const values = [
+        req.body.employee_name,
+        req.body.employee_surname,
+        req.body.email,
+        hash,
+        req.body.address,
+        req.body.job_title,
+        req.body.salary,
+        req.file.buffer, // Replace with $8
+        req.body.department_id,
+      ];
+  
   
         // Use async/await with the pool.query for better error handling
         const result = await conn.query(sql, values);
